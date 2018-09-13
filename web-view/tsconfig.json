@@ -16,14 +16,19 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "paths":{
+      "pages/*":["./src/pages/*"],
+      "components/*": ["./src/components/*"],
+      "store/*": [ "./src/store/*"],
+    }
   },
   "exclude": [
     "node_modules",
     "build",
     "scripts",
     "acceptance-tests",
-    "webpack",
+    // "webpack",
     "jest",
     "src/setupTests.ts"
   ]

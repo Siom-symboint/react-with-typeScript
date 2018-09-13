@@ -1,45 +1,16 @@
 import * as React from "react";
 
-import { Input, Select, Icon } from "antd";
-const Option = Select.Option;
+import { Input, Button } from "antd";
 
-const selectBefore = (
-  <Select defaultValue="Http://" style={{ width: 90 }}>
-    <Option value="Http://">Http://</Option>
-    <Option value="Https://">Https://</Option>
-  </Select>
-);
-const selectAfter = (
-  <Select defaultValue=".com" style={{ width: 80 }}>
-    <Option value=".com">.com</Option>
-    <Option value=".jp">.jp</Option>
-    <Option value=".cn">.cn</Option>
-    <Option value=".org">.org</Option>
-  </Select>
-);
-
+import "./loginDialog.less";
 
 class FormPart extends React.Component {
   public render() {
     return (
-      <div>
-        <div style={{ marginBottom: 16 }}>
-          <Input
-            addonBefore="Http://"
-            addonAfter=".com"
-            defaultValue="mysite"
-          />
-        </div>
-        <div style={{ marginBottom: 16 }}>
-          <Input
-            addonBefore={selectBefore}
-            addonAfter={selectAfter}
-            defaultValue="mysite"
-          />
-        </div>
-        <div style={{ marginBottom: 16 }}>
-          <Input addonAfter={<Icon type="setting" />} defaultValue="mysite" />
-        </div>
+      <div className="login-dialog">
+        <Input addonBefore="用户名" />
+        <Input type="password" addonBefore="密码" />
+        <Button type="primary">登录</Button>
       </div>
     );
   }

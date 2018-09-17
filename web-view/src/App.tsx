@@ -2,6 +2,7 @@ import * as React from "react";
 import "./App.css";
 
 import Login from "pages/login/index";
+import { hot } from "react-hot-loader";
 
 class App extends React.Component {
   public render() {
@@ -9,4 +10,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default hot(module)(App);

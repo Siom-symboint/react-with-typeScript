@@ -11,6 +11,7 @@ class FormPart extends React.Component {
         <Input addonBefore="用户名" />
         <Input type="password" addonBefore="密码" />
         <Button type="primary">登录</Button>
+        <Button type="primary">游客访问</Button>
       </div>
     );
   }

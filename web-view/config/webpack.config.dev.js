@@ -101,7 +101,8 @@ module.exports = {
       "react-native": "react-native-web",
       pages: path.resolve(__dirname, "../src/pages"),
       components: path.resolve(__dirname, "../src/components"),
-      store: path.resolve(__dirname, "../src/store")
+      store: path.resolve(__dirname, "../src/store"),
+      mock: path.resolve(__dirname, "../src/mock"),
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).

@@ -3,6 +3,9 @@ import Layout from "components/layout/index";
 import Headerform from "components/header/index";
 import { Route } from "react-router-dom";
 
+import "mock/index";
+import  axios from "axios";
+
 import "./index.less";
 
 function name() {
@@ -13,11 +16,18 @@ class Login extends React.Component {
     return (
       <div className="main-page">
         <Headerform />
-        <div style={{ marginTop: "80px"}} />
+        <div style={{ marginTop: "80px" }} />
         <Route exact={true} path="/mainPage" component={Layout} />
         <Route path="/mainPage/aboutme" component={name} />
       </div>
     );
+  }
+
+  public componentDidMount() {
+    axios.post("/data").then(res => {
+      console.log(res);
+      return res;
+    });
   }
 }
 

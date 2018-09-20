@@ -1,11 +1,45 @@
-import { Menu, Icon } from "antd";
+import { Menu } from "antd";
 import * as React from "react";
 const SubMenu = Menu.SubMenu;
 
-class Layout extends React.Component {
+import Fetch from "fetch/index";
+import { connect } from "react-redux";
+import { ISlectedItem, listSelection } from "store/listInfo/action.ts";
+
+/**
+ * 定义菜单接口
+ */
+interface IMenuChildItem {
+  label: string;
+  pageType: number;
+}
+interface IMenuItem {
+  label: string;
+  pageType: number;
+  children: IMenuChildItem[];
+}
+
+export interface IProps {
+  menuTag: number;
+  articleTag: number;
+  onIncrement?: (arg: ISlectedItem) => void;
+}
+
+class Layout extends React.Component<IProps, {}> {
   public state = {
-    collapsed: false
+    collapsed: false,
+    menuList: []
   };
+
+  constructor(props: IProps) {
+    super(props);
+    // click事件中无法获取到当前组件的(state,props),在构造函数中改变指向
+    this.onSelectedItem = this.onSelectedItem.bind(this);
+  }
+
+  public componentDidMount() {
+    this.getData();
+  }
 
   public toggleCollapsed = () => {
     this.setState({
@@ -13,49 +47,67 @@ class Layout extends React.Component {
     });
   };
 
+  public async getData() {
+    const res = await Fetch.get("/menuList");
+    this.setState({
+      menuList: res.data.result
+    });
+  }
+  public onSelectedItem(r: any) {
+    // 由于onIncrement可能为空?(从语法检查角度来讲,那么做好保护....)
+    const { onIncrement } = this.props;
+    onIncrement
+      ? onIncrement({
+          menuTag: Number(r.keyPath[1]),
+        articleTag: Number(r.keyPath[0])
+        })
+      : console.log("error function");
+  }
+
   public render() {
+    const MenuItem = this.state.menuList.map((item: IMenuItem, index) => {
+      return (
+        <SubMenu
+          key={item.pageType}
+          title={
+            <span>
+              <span>{item.label}</span>
+            </span>
+          }
+        >
+          {item.children.map((child, j) => {
+            return <Menu.Item key={child.pageType}>{child.label}</Menu.Item>;
+          })}
+        </SubMenu>
+      );
+    });
+
     return (
       <div style={{ width: 256 }}>
         <Menu
           defaultSelectedKeys={["1"]}
-          defaultOpenKeys={["sub1"]}
+          defaultOpenKeys={["1", "2"]}
           mode="inline"
           inlineCollapsed={this.state.collapsed}
+          onClick={this.onSelectedItem}
         >
-          <SubMenu
-            key="sub1"
-            title={
-              <span>
-                <Icon type="mail" />
-                <span>Navigation One</span>
-              </span>
-            }
-          >
-            <Menu.Item key="5">Option 5</Menu.Item>
-            <Menu.Item key="6">Option 6</Menu.Item>
-            <Menu.Item key="7">Option 7</Menu.Item>
-            <Menu.Item key="8">Option 8</Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="sub2"
-            title={
-              <span>
-                <Icon type="appstore" />
-                <span>Navigation Two</span>
-              </span>
-            }
-          >
-            <Menu.Item key="9">Option 9</Menu.Item>
-            <Menu.Item key="10">Option 10</Menu.Item>
-            <SubMenu key="sub3" title="Submenu">
-              <Menu.Item key="11">Option 11</Menu.Item>
-              <Menu.Item key="12">Option 12</Menu.Item>
-            </SubMenu>
-          </SubMenu>
+          {MenuItem}
         </Menu>
       </div>
     );
   }
 }
+// 建立组件和store.dispatch的映射关系
+export function mapDispatchToProps(dispatch: any) {
+  return {
+    onIncrement: (arg: ISlectedItem) => dispatch(listSelection(arg))
+  };
+}
+export function mapStateToProps(state: object) {
+  return { ...state };
+}
 
-export default Layout;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Layout);

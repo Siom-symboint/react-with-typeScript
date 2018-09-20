@@ -21,6 +21,9 @@
       "pages/*":["./src/pages/*"],
       "components/*": ["./src/components/*"],
       "store/*": [ "./src/store/*"],
+      "fetch/*": [
+        "./src/fetch/*"
+      ],
     }
   },
   "exclude": [

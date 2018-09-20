@@ -71,6 +71,7 @@
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "react-hot-loader": "^4.3.6",
+    "redux-devtools": "^3.4.1",
     "tsconfig-paths": "^3.6.0",
     "typescript": "^2.1.0"
   },

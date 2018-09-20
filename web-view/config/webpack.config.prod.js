@@ -107,6 +107,7 @@ module.exports = {
       pages: path.resolve(__dirname, "../src","pages"),
       components: path.resolve(__dirname, "../src/components"),
       store: path.resolve(__dirname, "../src/store"),
+      fetch: path.resolve(__dirname, "../src/fetch")
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).

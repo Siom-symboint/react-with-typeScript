@@ -4,24 +4,22 @@ import App from "./App";
 import "./index.css";
 import registerServiceWorker from "./registerServiceWorker";
 import { AppContainer } from "react-hot-loader";
+import { Provider } from "react-redux";
+import store from "store/index";
 
-// ReactDOM.render(
-//   <AppContainer>
-//     <App />
-//   </AppContainer>,
-//   document.getElementById("root") as HTMLElement
-// );
+
 
 const root = document.getElementById("root");
 const render = (Component: any): void => {
   ReactDOM.render(
     <AppContainer>
-      <Component />
+      <Provider store={store}>
+        <Component />
+      </Provider>
     </AppContainer>,
     root
   );
 };
 render(App);
-
 
 registerServiceWorker();

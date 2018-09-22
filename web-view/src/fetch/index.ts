@@ -16,7 +16,11 @@ class Fetch {
       });
     return result;
   }
-  public async post(url: string, requestData?: object,requestType = 'payLoad') {
+  public async post(
+    url: string,
+    requestData?: object,
+    requestType = "payLoad"
+  ) {
     let result: any;
     // formData格式传参
     const formData = new FormData();
@@ -25,14 +29,34 @@ class Fetch {
         formData.append(key, requestData[key]);
       });
     }
-    await fetch(url, {
-      method: "POST",
-      body: requestType ==='payLoad'? JSON.stringify(requestData):formData
-    })
-      .then(res => res.json())
-      .then(r => {
-        result = r;
-      });
+    try {
+      await fetch(url, {
+        method: "POST",
+        body:
+          requestType === "payLoad" ? JSON.stringify(requestData) : formData,
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Accept:
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
+          // "Content-Type": "application/x-www-form-urlencoded",
+        }
+      })
+        .then(res => {
+          let r:any;
+          if(url.includes('.md')){
+            r = res.text()
+          }else{
+            r = res.json();
+          }
+          return r
+        })
+        .then(r => {
+          result = r;
+        });
+    } catch (error) {
+      console.log(error);
+      result = { data: "network error" };
+    }
     return result;
   }
 }

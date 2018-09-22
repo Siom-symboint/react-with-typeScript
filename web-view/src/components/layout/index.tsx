@@ -5,6 +5,7 @@ const SubMenu = Menu.SubMenu;
 import Fetch from "fetch/index";
 import { connect } from "react-redux";
 import { ISlectedItem, listSelection } from "store/listInfo/action.ts";
+import { showDetailPage } from "store/showDetailPage/action.ts";
 
 /**
  * 定义菜单接口
@@ -20,8 +21,6 @@ interface IMenuItem {
 }
 
 export interface IProps {
-  menuTag: number;
-  articleTag: number;
   onIncrement?: (arg: ISlectedItem) => void;
 }
 
@@ -52,6 +51,10 @@ class Layout extends React.Component<IProps, {}> {
     this.setState({
       menuList: res.data.result
     });
+    const { onIncrement } = this.props;
+    onIncrement
+      ? onIncrement({ menuTag: 1, articleTag: 1 })
+      : console.log("error");
   }
   public onSelectedItem(r: any) {
     // 由于onIncrement可能为空?(从语法检查角度来讲,那么做好保护....)
@@ -59,9 +62,9 @@ class Layout extends React.Component<IProps, {}> {
     onIncrement
       ? onIncrement({
           menuTag: Number(r.keyPath[1]),
-        articleTag: Number(r.keyPath[0])
+          articleTag: Number(r.keyPath[0])
         })
-      : console.log("error function");
+      : console.log("error"); // 后续程序错误处理
   }
 
   public render() {
@@ -97,14 +100,18 @@ class Layout extends React.Component<IProps, {}> {
     );
   }
 }
-// 建立组件和store.dispatch的映射关系
+// 将dispatch映射到HOC中
 export function mapDispatchToProps(dispatch: any) {
   return {
-    onIncrement: (arg: ISlectedItem) => dispatch(listSelection(arg))
+    onIncrement: (arg: ISlectedItem) => {
+      dispatch(listSelection(arg));
+      dispatch(showDetailPage(false));
+    }
   };
 }
-export function mapStateToProps(state: object) {
-  return { ...state };
+// 将state映射到HOC中
+export function mapStateToProps(state: any) {
+  return { menuReducer: state.menuReducer };
 }
 
 export default connect(

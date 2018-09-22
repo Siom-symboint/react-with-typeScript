@@ -9,6 +9,10 @@ import {
 import Login from "pages/login/index";
 import MainPage from "pages/mainPage/index";
 
+/**
+ * @desc 基础路由构建
+ */
+
 interface IRouteObject {
   path: string;
   component: any;
@@ -30,7 +34,7 @@ function RouteWithSubRoutes(route: IRouteObject) {
   return (
     <Route
       path={route.path}
-      render={(props)=> <route.component routes={route.routes} {...props} />}
+      render={props => <route.component routes={route.routes} {...props} />}
     />
   );
 }
@@ -41,7 +45,9 @@ export function RouterFormate() {
       <div>
         <Switch>
           <Redirect exact={true} path="/" to={{ pathname: "/login" }} />
-          {routes.map( (route, i)=>  <RouteWithSubRoutes key={i} {...route} />)}
+          {routes.map((route, i) => (
+            <RouteWithSubRoutes key={i} {...route} />
+          ))}
         </Switch>
       </div>
     </Router>

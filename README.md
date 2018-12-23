@@ -14,7 +14,9 @@ react redux redux-sage  webpack  typescript
   }catch(e){
     window.open('https://segmentfault.com/')
   }
+
 ```
+some commit
 
  ![惆怅](./web-view/惆怅.png) ![惆怅](./web-view/惆怅.png) ![惆怅](./web-view/惆怅.png) ![惆怅](./web-view/惆怅.png)这是一条惆怅的分割线
 

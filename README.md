@@ -2,7 +2,7 @@
 
 react redux redux-sage  webpack  typescript
 
-之前写过react的一些demo,但是总觉得不成型,一些点似懂非懂,这次下决心做一个完整项目
+之前写过react的一些demo,但是总觉得不成型,一些点似懂非懂,这次想做一个完整项目
 
 ```typescript```不是熟,第一次用,并没有发挥其最大的价值,主要是辅助工程搭建,和熟悉整个react的工作流
 
